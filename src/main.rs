@@ -8,6 +8,7 @@ struct Carro {
 }
 //Funções da classe:
 impl Carro {
+    //Construtor da classe
     fn new(id: i32, placa: String, horas: i32, preco_hora: f32) -> Carro {
         Carro {
             id: id,
@@ -16,9 +17,11 @@ impl Carro {
             preco_hora: preco_hora,
         }
     }
+    //Calcula o preço total de acordo com a quantidade de horas e o preço da hora
     fn calcular_preco(&self) -> f32 {
         return self.horas as f32 * &self.preco_hora;
     }
+    //Formata todos os atributos da classe em uma string
     fn to_string(&self) -> String {
         return format!(
             "ID: {}, Placa: {}, Horas: {}, Preço da Hora: {}, Valor Total: {};",
@@ -29,6 +32,7 @@ impl Carro {
             &self.calcular_preco()
         );
     }
+    //Formata os atributos da classe em uma string para serem salvos em um arquivo
     fn to_file(&self) -> String {
         return format!("{}\n{}\n{}", &self.placa, &self.horas, &self.preco_hora);
     }
@@ -39,7 +43,9 @@ impl Carro {
 struct Controller;
 //Funções da classe:
 impl Controller {
+    //Controle de inserção
     fn insert(lista: &mut Vec<Carro>, placa: String, horas: i32, preco_hora: f32) -> bool {
+        //Se não foi informado placa, horas e o preço da hora, o objeto não é inserido na lista
         if placa.len() > 0 && horas > 0 && preco_hora > 0.0 {
             let id: i32 = 1 + lista.len() as i32;
             lista.push(Carro::new(id, placa, horas, preco_hora));
@@ -48,14 +54,18 @@ impl Controller {
             return false;
         }
     }
+    //Controle de listagem
     fn list(lista: &mut Vec<Carro>) -> bool {
+        //Se a lista está vazia, ela não é apresentada
         if lista.len() > 0 {
             return true;
         } else {
             return false;
         }
     }
+    //Controle de remoção
     fn remove(lista: &mut Vec<Carro>, id: i32) -> bool {
+        //Se a lista não está vaiza e foi informado um id válido, encontrada-se a posição do objeto na lista e seus dados são removidos
         if id > 0 && lista.len() > 0 {
             let index = lista
                 .iter_mut()
@@ -69,7 +79,9 @@ impl Controller {
             return false;
         }
     }
+    //Controle de gravação
     fn save(lista: &mut Vec<Carro>) -> bool {
+        //Se a lista não está vazia, os objetos são gravados no arquivo lista.txt
         if lista.len() > 0 {
             let mut dados = String::new();
             for elem in lista.iter() {
@@ -84,7 +96,10 @@ impl Controller {
             return false;
         }
     }
+    //Controle de leitura
     fn load(lista: &mut Vec<Carro>) -> bool {
+        //Se o arqivo lista.txt existe, lê-se o arquivo e as linhas são separadas em um vetor de strings
+        //Do vetor de strings, são extraídos os atributos dos objetos, que são inseridos na lista
         if std::path::Path::new("lista.txt").exists() {
             let dados = fs::read_to_string("lista.txt").expect("Erro ao ler o arquivo");
             let dados = dados.split("\n");
@@ -122,6 +137,7 @@ impl Controller {
 struct View;
 //Funções da classe:
 impl View {
+    //Interface do menu de seleção
     fn menu(lista: &mut Vec<Carro>) {
         loop {
             println!("----------");
@@ -145,6 +161,7 @@ impl View {
             }
         }
     }
+    //Interface de inserção
     fn insert(lista: &mut Vec<Carro>) {
         println!("----------");
         println!("Inserir carro.");
@@ -177,6 +194,7 @@ impl View {
             println!("Erro ao inserir objeto!");
         }
     }
+    //Interface de listagem
     fn list(lista: &mut Vec<Carro>) {
         println!("----------");
         println!("Listar carros.");
@@ -189,6 +207,7 @@ impl View {
             println!("A lista de objetos está vazia!");
         }
     }
+    //Interface de remoção
     fn remove(lista: &mut Vec<Carro>) {
         println!("----------");
         println!("Remover carro.");
@@ -207,6 +226,7 @@ impl View {
             println!("Erro ao remover Objeto!");
         }
     }
+    //Interface de gravação
     fn save(lista: &mut Vec<Carro>) {
         println!("----------");
         println!("Salvar lista.");
@@ -217,6 +237,7 @@ impl View {
             println!("Erro ao salvar a lista!");
         }
     }
+    //Interface de leitura
     fn load(lista: &mut Vec<Carro>) {
         println!("----------");
         println!("Carregar lista.");
@@ -230,13 +251,17 @@ impl View {
 }
 
 //Main
+//Declarações:
 use std::fs;
 use std::io;
+//Função Main:
 fn main() {
     println!("START");
 
+    //Criação da lista de carros que será utilizada ao longo do programa:
     let mut lista: Vec<Carro> = Vec::new();
 
+    //Iniciação da View:
     View::menu(&mut lista);
 
     println!("END");
