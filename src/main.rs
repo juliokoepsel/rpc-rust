@@ -1,10 +1,12 @@
-//Model Layer
+//Camada Model
+//Atributos da classe:
 struct Carro {
     id: i32,
     placa: String,
     horas: i32,
     preco_hora: f32,
 }
+//Funções da classe:
 impl Carro {
     fn new(id: i32, placa: String, horas: i32, preco_hora: f32) -> Carro {
         Carro {
@@ -32,8 +34,10 @@ impl Carro {
     }
 }
 
-//Controller Layer
+//Camada Controller
+//Atributos da classe:
 struct Controller;
+//Funções da classe:
 impl Controller {
     fn insert(lista: &mut Vec<Carro>, placa: String, horas: i32, preco_hora: f32) -> bool {
         if placa.len() > 0 && horas > 0 && preco_hora > 0.0 {
@@ -113,8 +117,10 @@ impl Controller {
     }
 }
 
-//View Layer
+//Camada View
+//Atributos da classe:
 struct View;
+//Funções da classe:
 impl View {
     fn menu(lista: &mut Vec<Carro>) {
         loop {
