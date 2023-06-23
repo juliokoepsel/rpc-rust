@@ -1,1 +1,1 @@
-# Exemplo de implementaç em rust
+# Exemplo de implementação em rust
