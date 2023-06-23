@@ -1,0 +1,17 @@
+syntax = "proto3";
+package procedures;
+
+service Estacionamento {
+    rpc SendRequest (EstacionamentoRequest) returns (EstacionamentoResponse);
+}
+
+message EstacionamentoRequest {
+    string from_addr = 1;
+    string to_addr = 2;
+    uint32 code = 3;
+}
+
+message EstacionamentoResponse {
+    bool successful = 1;
+    string message = 2;
+}
