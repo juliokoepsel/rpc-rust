@@ -1,16 +1,38 @@
 syntax = "proto3";
 package procedures;
 
+//Definição das RPCs:
 service Estacionamento {
     rpc SendRequest (EstacionamentoRequest) returns (EstacionamentoResponse);
+    rpc SendInsert (EstacionamentoInsert) returns (EstacionamentoResponse);
+    rpc SendList (EstacionamentoList) returns (EstacionamentoResponse);
+    rpc SendRemove (EstacionamentoRemove) returns (EstacionamentoResponse);
+    rpc SendSave (EstacionamentoSave) returns (EstacionamentoResponse);
 }
 
+//Definição das mensagens:
+
+//Mensagem de requisição
 message EstacionamentoRequest {
     string from_addr = 1;
     string to_addr = 2;
     uint32 code = 3;
 }
-
+//Mensagem de inserção
+message EstacionamentoInsert {
+    string placa = 1;
+    sint32 horas = 2;
+    float preco_hora = 3;
+}
+//Mensagem de listagem
+message EstacionamentoList {}
+//Mensagem de remoção
+message EstacionamentoRemove {
+    sint32 id = 1;
+}
+//Mensagem de gravação
+message EstacionamentoSave {}
+//Mensagens de resposta
 message EstacionamentoResponse {
     bool successful = 1;
     string message = 2;

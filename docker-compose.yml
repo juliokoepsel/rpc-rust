@@ -1,0 +1,10 @@
+services:
+  dev:
+    image: "rust:1.70"
+    command: bash -c "apt-get update && apt-get install protobuf-compiler -y && cd estacionamento && cargo run --bin procedures-server"
+    ports:
+      - "50051:50051"
+    volumes:
+      - ./:/estacionamento
+    environment:
+      - USER=leviathan
