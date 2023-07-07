@@ -1,4 +1,4 @@
-# Exemplo de implementação em rust
+# Exemplo de implementação de gRPC em rust
 Para executar, é necessário inserir os seguintes comandos em um terminal dentro da pasta do sistema:
 Para o servidor = "docker-compose up dev"
 Para o cliente = "cargo run --bin procedures-client"
