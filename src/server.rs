@@ -196,7 +196,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-//Camada Model
+//Model
 //Atributos da classe:
 #[derive(Debug)]
 struct Carro {
