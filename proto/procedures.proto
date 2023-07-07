@@ -3,7 +3,6 @@ package procedures;
 
 //Definição das RPCs:
 service Estacionamento {
-    rpc SendRequest (EstacionamentoRequest) returns (EstacionamentoResponse);
     rpc SendInsert (EstacionamentoInsert) returns (EstacionamentoResponse);
     rpc SendList (EstacionamentoList) returns (EstacionamentoResponse);
     rpc SendRemove (EstacionamentoRemove) returns (EstacionamentoResponse);
@@ -12,12 +11,6 @@ service Estacionamento {
 
 //Definição das mensagens:
 
-//Mensagem de requisição
-message EstacionamentoRequest {
-    string from_addr = 1;
-    string to_addr = 2;
-    uint32 code = 3;
-}
 //Mensagem de inserção
 message EstacionamentoInsert {
     string placa = 1;

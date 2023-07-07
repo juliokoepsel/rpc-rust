@@ -2,7 +2,7 @@
 use tonic::{transport::Server, Request, Response, Status};
 
 use procedures::estacionamento_server::{Estacionamento, EstacionamentoServer};
-use procedures::{EstacionamentoResponse, EstacionamentoRequest, EstacionamentoInsert, EstacionamentoList, EstacionamentoRemove, EstacionamentoSave};
+use procedures::{EstacionamentoResponse, EstacionamentoInsert, EstacionamentoList, EstacionamentoRemove, EstacionamentoSave};
 
 pub mod procedures {
     tonic::include_proto!("procedures");
@@ -22,22 +22,6 @@ pub struct EstacionamentoService {}
 //Funções da classe:
 #[tonic::async_trait]
 impl Estacionamento for EstacionamentoService {
-    //Função de resposta para requisição
-    async fn send_request(
-        &self,
-        request: Request<EstacionamentoRequest>,
-    ) -> Result<Response<EstacionamentoResponse>, Status> {
-        println!("Got a request: {:?}", request);
-
-        let req = request.into_inner();
-
-        let reply = EstacionamentoResponse {
-            successful: true,
-            message: format!("Sent {} to {} from {}", req.code, req.to_addr, req.from_addr),
-        };
-
-        Ok(Response::new(reply))
-    }
     //Função de resposta para inserção
     async fn send_insert(
         &self,
@@ -47,7 +31,7 @@ impl Estacionamento for EstacionamentoService {
 
         let req = request.into_inner();
         let mut sucesso: bool = false;
-        let mut resultado = format!("");
+        let resultado: String;
 
         //Se não foi informado placa, horas e o preço da hora, o objeto não é inserido na lista
         if req.placa.len() > 0 && req.horas > 0 && req.preco_hora > 0.0 {
@@ -61,7 +45,7 @@ impl Estacionamento for EstacionamentoService {
 
         let reply = EstacionamentoResponse {
             successful: sucesso,
-            message: format!("{} placa={}, horas={}, preco_hora={}", resultado, req.placa, req.horas, req.preco_hora),
+            message: format!("{}", resultado),
         };
 
         Ok(Response::new(reply))
@@ -74,7 +58,7 @@ impl Estacionamento for EstacionamentoService {
         println!("Got a request: {:?}", request);
 
         let mut sucesso: bool = false;
-        let mut resultado = format!("");
+        let mut resultado: String = format!("");
 
         //Se a lista não estiver vazia, são retornados os objetos dela
         if lista().lock().unwrap().len() > 0 {
@@ -103,7 +87,7 @@ impl Estacionamento for EstacionamentoService {
 
         let req = request.into_inner();
         let mut sucesso: bool = false;
-        let mut resultado = format!("");
+        let resultado: String;
 
         //Se a lista não está vazia e foi informado um id válido, encontrada-se a posição do objeto na lista e seus dados são removidos
         if req.id > 0 && lista().lock().unwrap().len() > 0 {
@@ -131,7 +115,7 @@ impl Estacionamento for EstacionamentoService {
 
         let reply = EstacionamentoResponse {
             successful: sucesso,
-            message: format!("{} id={}", resultado, req.id),
+            message: format!("{}", resultado),
         };
 
         Ok(Response::new(reply))
@@ -144,7 +128,7 @@ impl Estacionamento for EstacionamentoService {
         println!("Got a request: {:?}", request);
 
         let mut sucesso: bool = false;
-        let mut resultado = format!("");
+        let resultado: String;
 
         //Se a lista não está vazia, os objetos são gravados no arquivo lista.txt
         if lista().lock().unwrap().len() > 0 {

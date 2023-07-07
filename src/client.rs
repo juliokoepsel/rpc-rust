@@ -1,11 +1,6 @@
 //Declarações do RPC:
 use procedures::estacionamento_client::EstacionamentoClient;
-use procedures::{EstacionamentoRequest, EstacionamentoInsert, EstacionamentoList, EstacionamentoRemove, EstacionamentoSave};
-// use procedures::EstacionamentoRequest;
-// use procedures::EstacionamentoInsert;
-// use procedures::EstacionamentoList;
-// use procedures::EstacionamentoRemove;
-// use procedures::EstacionamentoSave;
+use procedures::{EstacionamentoInsert, EstacionamentoList, EstacionamentoRemove, EstacionamentoSave};
 
 pub mod procedures {
     tonic::include_proto!("procedures");
@@ -19,16 +14,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut client = EstacionamentoClient::connect(
         "https://0.0.0.0:50051"
     ).await?;
-
-    let request = tonic::Request::new(
-        EstacionamentoRequest {
-            from_addr: "client_machine".to_owned(),
-            to_addr: "server_machine".to_owned(),
-            code: 123,
-        }
-    );
-    let response = client.send_request(request).await?;
-    println!("RESPONSE={:?}", response);
 
     //View
     loop {
